@@ -2,11 +2,9 @@ import {AsyncStorage} from 'react-native'
 
 export const FLASHCARD_STORAGE_KEY = 'MobileFlashcards:flashcards'
 
-/*
 
-Example Javascript Structure:
 
-{
+let dataStore = {
   React: {
     title: 'React',
     questions: [
@@ -30,29 +28,57 @@ Example Javascript Structure:
     ]
   }
 }
-*/
+
+export function saveDeck(){
+  callback(dataStore)
+  AsyncStorage.setItem(FLASHCARD_STORAGE_KEY, JSON.stringify(dataStore))
+}
+
+let callback = null
+
+export function deckResults (results) {
+  console.log("deckResults:"+results)
+  console.log(results)
+  //dataStore = results
+  callback(dataStore)
+
+}
+
+
+export function initDataStore(cb)
+{
+  callback = cb
+  AsyncStorage.getItem(FLASHCARD_STORAGE_KEY).then(deckResults)
+}
 
 /*
 getDecks: return all of the decks along with their titles, questions, and answers.
 */
 export function getDecks(){
-  return AsyncStorage.getItem(FLASHCARD_STORAGE_KEY)
+  return dataStore
 }
 /*
 getDeck: take in a single id argument and return the deck associated with that id.
 */
 export function getDeck(deckId){
   const deckData = getDecks()
-
+  console.log("all data:"+JSON.stringify(deckData))
 // AJS -- not sure if this works
   return deckData[deckId]
 }
+
 /*
 saveDeckTitle: take in a single title argument and add it to the decks.
  AKA: "New Deck"
 */
 export function saveDeckTitle(title){
-  console.log("saveDeckTitle:"+title)
+  var newEntry = {title:title,questions:new Array()}
+  dataStore[title]=newEntry
+  console.log("saveDeckTitle")
+  console.log(dataStore)
+  saveDeck()
+  //return AsyncStorage.mergeItem(FLASHCARD_STORAGE_KEY,JSON.stringify(newEntry))
+
   //  title: 'React',
   //  questions: []
 }
@@ -62,6 +88,7 @@ addCardToDeck: take in two arguments, title and card, and will add the card to t
 */
 export function addCardToDeck(title,card){
 
+  dataStore[title].questions.push(card)
   //  questions: []
 
 //  {

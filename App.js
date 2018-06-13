@@ -8,7 +8,7 @@ import {DeckList} from './components/DeckList'
 import {DeckView} from './components/DeckView'
 import {blue,white} from './utils/colors'
 import {FlashcardStatusBar } from './components/FlashcardStatusBar'
-
+import {initDataStore} from './utils/storage'
 
 
 const Tabs = createBottomTabNavigator ({
@@ -44,7 +44,7 @@ const Tabs = createBottomTabNavigator ({
 
 const MainNavigator = createStackNavigator({
   Home : {
-    screen: DeckList,
+    screen:  props=> <DeckList {...props} />,
   },
   NewDeck: {
     screen: NewDeck,
@@ -83,18 +83,29 @@ MainNavigator.router.getStateForAction = (action, state) => {
 
 
 export default class App extends React.Component {
+state = {
+  data : null
+}
 
-
+  dataChanged = (data)=>{
+     console.log("dataChanged")
+     console.log(data)
+     this.setState({data:data})
+   }
+  componentDidMount(){
+        initDataStore(this.dataChanged)
+  }
 
   render() {
 
 
-
+    console.log("render called in App")
+    const stateClone = Object.assign({}, this.state.data);
 
     return (
       <View style={{flex:1}}>
         <FlashcardStatusBar backgroundColor={blue} barStyle='light-content' />
-        <MainNavigator />
+        <MainNavigator  screenProps={stateClone}/>
       </View>
     )
   }

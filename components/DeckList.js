@@ -2,31 +2,7 @@ import React, { Component } from 'react'
 import { View , Text, Modal, TouchableOpacity, TouchableHighlight, Platform, StyleSheet, FlatList } from 'react-native'
 import {blue,white} from '../utils/colors'
 import {NewDeck} from './NewDeck'
-
-const myjs={
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-}
+import {getDecks} from '../utils/storage'
 
 
 export class DeckList extends Component {
@@ -42,11 +18,14 @@ export class DeckList extends Component {
   componentDidMount(){
     let {dataSource} = this.state
 
+console.log("DeckList: component did mount")
+    const decks = getDecks()
+    console.log(decks)
     //let myarray = Object.keys(myjs)
 let working = [{key: 'a'}, {key: 'b'},{key: 'c'}]
 
-let dataarray = Object.keys(myjs).map(function(val){
-  return {'key': val, ...myjs[val]}
+let dataarray = Object.keys(decks).map(function(val){
+  return {'key': val, ...decks[val]}
 })
 console.log(dataarray)
 this.setState({listdata: dataarray})
@@ -65,6 +44,18 @@ this.setState({listdata: dataarray})
       )
     }
     render() {
+
+      if (this.props && this.props.screenProps===null) return (<View></View>)
+      const decks = this.props.screenProps
+      let dataarray = Object.keys(decks).map(function(val){
+        return {'key': val, ...decks[val]}
+      })
+
+      console.log("DeckList Render")
+      console.log("====")
+      console.log(this.props.data)
+      console.log(this.props.screenProps)
+      console.log("====")
 
     return (
 
@@ -89,7 +80,7 @@ this.setState({listdata: dataarray})
         </TouchableHighlight>
       </View>
       <FlatList
-  data={this.state.listdata}
+  data={dataarray}
   renderItem={({item}) => <TouchableOpacity
       onPress={() => this.props.navigation.navigate('DeckView',{entryId: item.key})}
     >

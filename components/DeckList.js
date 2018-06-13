@@ -71,36 +71,16 @@ this.setState({listdata: dataarray})
 
 
       <View style={styles.container}>
-      <Modal
-                animationType="slide"
-                transparent={false}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                  alert('Modal has been closed.');
-                }}>
-                <View style={{marginTop: 22}}>
-                  <View>
-                    <NewDeck/>
-
-                    <TouchableHighlight
-                      onPress={() => {
-                        this.setModalVisible(!this.state.modalVisible);
-                      }}>
-                      <Text>Hide Modal</Text>
-                    </TouchableHighlight>
-                  </View>
-                </View>
-              </Modal>
-
-       <View style={styles.headerContainer}>
-
+      <View style={styles.headerContainer}>
       <View style={styles.titleview}>
         <Text style={styles.title}> Deck List </Text>
         </View>
         <TouchableHighlight
-  onPress={() => {
-    this.setModalVisible(true);
-  }}>
+  //onPress={() => {    this.setModalVisible(true);}}
+
+  onPress={() => this.props.navigation.navigate('NewDeck')}
+
+  >
 
         <View style={styles.button}>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,Platform,StatusBar, ListView } from 'react-native';
+import { StyleSheet, Text, View,Platform,StatusBar } from 'react-native';
 import {createBottomTabNavigator, createStackNavigator} from 'react-navigation'
 import {FontAwesome, Ionicons} from '@expo/vector-icons'
 import {Constants} from 'expo'
@@ -7,15 +7,7 @@ import {NewDeck} from './components/NewDeck'
 import {DeckList} from './components/DeckList'
 import {DeckView} from './components/DeckView'
 import {blue,white} from './utils/colors'
-
-function FlashcardStatusBar({backgroundColor,...props}){
-  return(
-    <View style={{backgroundColor,height:Constants.statusBarHeight}}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
-    </View>
-  )
-}
-
+import {FlashcardStatusBar } from './components/FlashcardStatusBar'
 
 
 
@@ -73,6 +65,22 @@ const MainNavigator = createStackNavigator({
     }
   }
 })
+//https://medium.com/handlebar-labs/replace-a-screen-using-react-navigation-a503eab207eb
+const prevGetStateForActionHomeStack = MainNavigator.router.getStateForAction;
+MainNavigator.router.getStateForAction = (action, state) => {
+    if (state && action.type === 'ReplaceCurrentScreen') {
+      const routes = state.routes.slice(0, state.routes.length - 1);
+      routes.push(action);
+      return {
+        ...state,
+        routes,
+        index: routes.length - 1,
+      };
+    }
+    return prevGetStateForActionHomeStack(action, state);
+  }
+
+
 
 export default class App extends React.Component {
 

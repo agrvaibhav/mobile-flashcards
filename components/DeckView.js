@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
 import { View , Text, TouchableOpacity, Platform, StyleSheet, FlatList } from 'react-native'
 import {blue,white} from '../utils/colors'
+import { getDeck} from '../utils/storage'
 
 export class DeckView extends Component {
+  state = {
+    entryData: null,
+  }
 
   static navigationOptions = ({navigation}) => {
+    const {entryId}=navigation.state.params
     return {
-      title: 'Deck List'
+      title: entryId
     }
   }
 
+
+  componentDidMount(){
+    const {entryId}=this.props.navigation.state.params
+    console.log(getDeck(entryId))
+    this.setState({entryData:getDeck(entryId)})
+  }
 
 
     render() {

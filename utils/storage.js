@@ -51,7 +51,8 @@ export function getDeck(deckId){
 saveDeckTitle: take in a single title argument and add it to the decks.
  AKA: "New Deck"
 */
-export function addCardToDeck(title,card){
+export function saveDeckTitle(title){
+  console.log("saveDeckTitle:"+title)
   //  title: 'React',
   //  questions: []
 }

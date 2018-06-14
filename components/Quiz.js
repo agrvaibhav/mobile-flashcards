@@ -2,18 +2,20 @@ import React, { Component } from 'react'
 import { View , Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import {blue,white} from '../utils/colors'
 
-export class DeckView extends Component {
+export class Quiz extends Component {
   state = {
-    entryData: null,
+    right: 0,
+    wrong: 0,
+    currentCard: 0,
+    answer: false
   }
 
   static navigationOptions = ({navigation}) => {
     const {entryId}=navigation.state.params
     return {
-      title: entryId
+      title: 'Quiz for '+entryId
     }
   }
-
 
 
     render() {
@@ -22,25 +24,47 @@ export class DeckView extends Component {
       if (this.props && this.props.screenProps===null) return (<View></View>)
       const decks = this.props.screenProps
       let thisdeck = this.props.screenProps[entryId]
+      let thisQuestion = thisdeck.questions[this.state.currentCard]
+      let totalQuestions = thisdeck.questions.length
+
+
+      if (this.state.currentCard >= totalQuestions  )
+        return (
+          <View>
+          <Text>Results</Text>
+          <Text>{this.state.right}/{totalQuestions} correct, {((this.state.right/totalQuestions)*100).toFixed(1)}%</Text>
+          </View>
+        )
 
     return (
         <View>
         <View style={styles.titleview}>
-        <Text style={styles.title}>{entryId}</Text>
-        <Text style={styles.title}>{thisdeck.questions.length} cards</Text>
+        <Text style={styles.title}>{this.state.currentCard+1}/{totalQuestions}</Text>
+        { this.state.answer===true ? <Text style={styles.title}>{thisQuestion.answer}</Text>
+        :<Text style={styles.title}>{thisQuestion.question}</Text>
+      }
         </View>
         <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('AddCard',{entryId: entryId})}
+        onPress={() => this.setState({answer:!this.state.answer})}
         >
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Add Card</Text>
+        { this.state.answer===true ? <Text style={styles.title}>show question</Text>
+        :<Text style={styles.title}>show answer</Text>
+      }
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Quiz',{entryId: entryId})}
+            onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.right+1})}}
         >
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Start Quiz</Text>
+          <Text style={styles.buttonText}>Correct</Text>
+        </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.wrong+1})}}
+        >
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Incorrect</Text>
         </View>
         </TouchableOpacity>
         </View>

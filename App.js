@@ -6,6 +6,8 @@ import {Constants} from 'expo'
 import {NewDeck} from './components/NewDeck'
 import {DeckList} from './components/DeckList'
 import {DeckView} from './components/DeckView'
+import {AddCard} from './components/AddCard'
+import {Quiz} from './components/Quiz'
 import {blue,white} from './utils/colors'
 import {FlashcardStatusBar } from './components/FlashcardStatusBar'
 import {initDataStore} from './utils/storage'
@@ -63,6 +65,24 @@ const MainNavigator = createStackNavigator({
         backgroundColor: blue
       }
     }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue
+      }
+    }
   }
 })
 //https://medium.com/handlebar-labs/replace-a-screen-using-react-navigation-a503eab207eb
@@ -100,6 +120,7 @@ state = {
 
 
     console.log("render called in App")
+    //https://github.com/react-navigation/react-navigation/issues/577
     const stateClone = Object.assign({}, this.state.data);
 
     return (

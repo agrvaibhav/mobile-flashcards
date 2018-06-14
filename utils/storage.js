@@ -89,6 +89,8 @@ addCardToDeck: take in two arguments, title and card, and will add the card to t
 export function addCardToDeck(title,card){
 
   dataStore[title].questions.push(card)
+  saveDeck()
+
   //  questions: []
 
 //  {

@@ -1,19 +1,34 @@
 import React, { Component } from 'react'
-import { View , Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
+import { View , Text, TouchableOpacity, TextInput,Platform, StyleSheet } from 'react-native'
 import {blue,white} from '../utils/colors'
+import {addCardToDeck} from '../utils/storage'
 
-export class DeckView extends Component {
+export class AddCard extends Component {
   state = {
-    entryData: null,
+    question: '',
+    answer: ''
   }
 
   static navigationOptions = ({navigation}) => {
     const {entryId}=navigation.state.params
     return {
-      title: entryId
+      title: 'Add card to '+entryId
     }
   }
 
+  toDeck = (deck) => {
+
+    this.props.navigation.goBack()
+
+   }
+
+
+  saveCard(){
+    const {entryId}=this.props.navigation.state.params
+    let question = {question:this.state.question,answer:this.state.answer}
+    addCardToDeck(entryId,question)
+    this.toDeck(entryId)
+  }
 
 
     render() {
@@ -24,26 +39,28 @@ export class DeckView extends Component {
       let thisdeck = this.props.screenProps[entryId]
 
     return (
-        <View>
-        <View style={styles.titleview}>
-        <Text style={styles.title}>{entryId}</Text>
-        <Text style={styles.title}>{thisdeck.questions.length} cards</Text>
-        </View>
-        <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('AddCard',{entryId: entryId})}
-        >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Add Card</Text>
-        </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Quiz',{entryId: entryId})}
-        >
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Start Quiz</Text>
-        </View>
-        </TouchableOpacity>
-        </View>
+      <View>
+      <Text>Question:</Text>
+      <TextInput
+             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+             onChangeText={(question) => this.setState({question})}
+             value={this.state.question}
+           />
+           <Text>Answer:</Text>
+           <TextInput
+                  style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                  onChangeText={(answer) => this.setState({answer})}
+                  value={this.state.answer}
+                />
+           <TouchableOpacity
+           onPress={() => {
+           this.saveCard();
+           }}>
+           <View style={styles.button}>
+             <Text style={styles.buttonText}>Submit</Text>
+           </View>
+           </TouchableOpacity>
+      </View>
     )
     }
 

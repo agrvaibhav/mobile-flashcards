@@ -1,48 +1,13 @@
 import React, { Component } from 'react'
-import { View , Text, Modal, TouchableOpacity, TouchableHighlight, Platform, StyleSheet, FlatList } from 'react-native'
+import { View , Text, TouchableOpacity, TouchableHighlight, Platform, StyleSheet, FlatList } from 'react-native'
 import {blue,white} from '../utils/colors'
 import {NewDeck} from './NewDeck'
 import {getDecks} from '../utils/storage'
 
 
 export class DeckList extends Component {
-  state = {
-    listdata: null,
-    modalVisible: false,
-
-  }
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
-  componentDidMount(){
-    let {dataSource} = this.state
-
-console.log("DeckList: component did mount")
-    const decks = getDecks()
-    console.log(decks)
-    //let myarray = Object.keys(myjs)
-let working = [{key: 'a'}, {key: 'b'},{key: 'c'}]
-
-let dataarray = Object.keys(decks).map(function(val){
-  return {'key': val, ...decks[val]}
-})
-console.log(dataarray)
-this.setState({listdata: dataarray})
 
 
-    //this.setState({listdata: [{key: 'a'}, {key: 'b'},{key: 'c'}]})
-    //this.setState({listdata: myarray})
-    //this.setState({listdata: myjs})
-  //  console.log(myarray)
-  }
-    renderFooter = () => {
-      return (
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Footer Button</Text>
-        </View>
-      )
-    }
     render() {
 
       if (this.props && this.props.screenProps===null) return (<View></View>)
@@ -50,6 +15,7 @@ this.setState({listdata: dataarray})
       let dataarray = Object.keys(decks).map(function(val){
         return {'key': val, ...decks[val]}
       })
+
 
       console.log("DeckList Render")
       console.log("====")

@@ -18,7 +18,7 @@ export class DeckView extends Component {
 
     render() {
       const {entryId}=this.props.navigation.state.params
-      console.log('inside render deckview')
+      //console.log('inside render deckview')
       if (this.props && this.props.screenProps===null) return (<View></View>)
       const decks = this.props.screenProps
       let thisdeck = this.props.screenProps[entryId]
@@ -51,12 +51,6 @@ export class DeckView extends Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   button: {
     padding: 10,
     backgroundColor: blue,
@@ -68,10 +62,6 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 20,
   },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
   titleview: {
     padding: 10,
     alignSelf: 'center',
@@ -82,20 +72,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
   },
-  rowcontainer: {
-    flex: 1,
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  rowtext: {
-    marginLeft: 12,
-    fontSize: 16,
-  },
-  separator: {
-  flex: 1,
-  height: StyleSheet.hairlineWidth,
-  backgroundColor: '#8E8E8E',
-},
 
 });

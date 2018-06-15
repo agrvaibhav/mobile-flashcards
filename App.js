@@ -110,32 +110,3 @@ state = {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    padding: 10,
-    backgroundColor: blue,
-    alignSelf: 'center',
-    borderRadius: 5,
-    margin: 20,
-  },
-  buttonText :{
-    color: white,
-    fontSize: 20,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-  },
-
-});

@@ -44,12 +44,12 @@ export class DeckList extends Component {
         </View>
         </TouchableHighlight>
       </View>
-      <FlatList
+      <FlatList style={{alignSelf: 'stretch'}}
   data={dataarray}
   renderItem={({item}) => <TouchableOpacity
       onPress={() => this.props.navigation.navigate('DeckView',{entryId: item.key})}
     >
-    <View><Text>{item.key}</Text><Text>{item.questions.length} Cards</Text></View></TouchableOpacity>}
+    <View><Text style={styles.rowtext}>{item.key}</Text><Text style={styles.rowtwotext}>{item.questions.length} Cards</Text></View></TouchableOpacity>}
   ItemSeparatorComponent= {()=><View style={styles.separator}/>}
 />
       </View>
@@ -98,8 +98,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rowtext: {
+    marginLeft: 16,
+    fontSize: 20,
+    alignSelf: 'center',
+
+  },
+  rowtwotext: {
     marginLeft: 12,
     fontSize: 16,
+    alignSelf: 'center',
+    color: '#8E8E8E',
   },
   separator: {
   flex: 1,

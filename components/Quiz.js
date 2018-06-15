@@ -58,8 +58,8 @@ export class Quiz extends Component {
 
     return (
         <View>
-        <View style={styles.titleview}>
-        <Text style={styles.title}>{this.state.currentCard+1}/{totalQuestions}</Text>
+        <View style={styles.statisticsview}>
+        <Text style={styles.statistics}>{this.state.currentCard+1}/{totalQuestions}</Text>
         { this.state.answer===true ? <Text style={styles.title}>{thisQuestion.answer}</Text>
         :<Text style={styles.title}>{thisQuestion.question}</Text>
       }
@@ -76,14 +76,14 @@ export class Quiz extends Component {
         <TouchableOpacity
             onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.right+1,answer:false})}}
         >
-        <View style={styles.button}>
+        <View style={[styles.button,{backgroundColor:'#027e12'}]}>
           <Text style={styles.buttonText}>Correct</Text>
         </View>
         </TouchableOpacity>
         <TouchableOpacity
         onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.wrong+1,answer:false})}}
         >
-        <View style={styles.button}>
+        <View style={[styles.button,{backgroundColor:'#d22a25'}]}>
           <Text style={styles.buttonText}>Incorrect</Text>
         </View>
         </TouchableOpacity>
@@ -121,25 +121,21 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
+  statisticsview: {
+    padding: 10,
+    margin: 20,
+
+  },
+  statistics: {
+    fontSize: 20,
+    color: '#8E8E8E',
+
+  },
 
   title: {
     fontSize: 20,
     textAlign: 'center',
   },
-  rowcontainer: {
-    flex: 1,
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  rowtext: {
-    marginLeft: 12,
-    fontSize: 16,
-  },
-  separator: {
-  flex: 1,
-  height: StyleSheet.hairlineWidth,
-  backgroundColor: '#8E8E8E',
-},
+
 
 });

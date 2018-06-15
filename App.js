@@ -11,42 +11,14 @@ import {Quiz} from './components/Quiz'
 import {blue,white} from './utils/colors'
 import {FlashcardStatusBar } from './components/FlashcardStatusBar'
 import {initDataStore} from './utils/storage'
+import { setLocalNotification } from './utils/helpers'
 
 
-const Tabs = createBottomTabNavigator ({
-
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-      tabBarIcon:({tintColor})=><Ionicons name='ios-create' size={30} color={tintColor}/>
-    }
-  }
-  }, {
-    navigationOptions: {
-      header:null
-    },
-    tabBarOptions: {
-      activeTintColor: Platform.OS==='ios'?blue:white,
-      style: {
-        height: 56,
-        backgroundColor: Platform.OS==='ios'?white:blue,
-        shadowColor: 'rgba(0,0,0,0.24)',
-        shadowOffset: {
-          width:0,
-          height:3
-        },
-        shadowRadius: 6,
-        shadowOpacity: 1
-      }
-    }
-  }
-)
 
 
 const MainNavigator = createStackNavigator({
   Home : {
-    screen:  props=> <DeckList {...props} />,
+    screen: DeckList,
   },
   NewDeck: {
     screen: NewDeck,
@@ -83,7 +55,12 @@ const MainNavigator = createStackNavigator({
         backgroundColor: blue
       }
     }
-  }
+  }},
+  {
+    //headerMode: 'none',
+    navigationOptions: {
+      headerStyle: {height: 0}
+    },
 })
 //https://medium.com/handlebar-labs/replace-a-screen-using-react-navigation-a503eab207eb
 const prevGetStateForActionHomeStack = MainNavigator.router.getStateForAction;
@@ -114,6 +91,8 @@ state = {
    }
   componentDidMount(){
         initDataStore(this.dataChanged)
+        setLocalNotification()
+
   }
 
   render() {
@@ -125,7 +104,7 @@ state = {
 
     return (
       <View style={{flex:1}}>
-        <FlashcardStatusBar backgroundColor={blue} barStyle='light-content' />
+      <FlashcardStatusBar backgroundColor={blue} barStyle='light-content' />
         <MainNavigator  screenProps={stateClone}/>
       </View>
     )

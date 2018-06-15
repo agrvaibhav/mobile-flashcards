@@ -6,8 +6,6 @@ import {getDecks} from '../utils/storage'
 
 
 export class DeckList extends Component {
-
-
     render() {
 
       if (this.props && this.props.screenProps===null) return (<View></View>)
@@ -16,12 +14,13 @@ export class DeckList extends Component {
         return {'key': val, ...decks[val]}
       })
 
-
+/*
       console.log("DeckList Render")
       console.log("====")
       console.log(this.props.data)
       console.log(this.props.screenProps)
       console.log("====")
+*/
 
     return (
 

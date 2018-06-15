@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View , Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import {blue,white} from '../utils/colors'
+import { setLocalNotification,clearLocalNotification } from '../utils/helpers'
 
 export class Quiz extends Component {
   state = {
@@ -16,7 +17,11 @@ export class Quiz extends Component {
       title: 'Quiz for '+entryId
     }
   }
+    componentDidMount(){
 
+    clearLocalNotification()
+        .then(setLocalNotification)
+      }
 
     render() {
       const {entryId}=this.props.navigation.state.params
@@ -31,8 +36,23 @@ export class Quiz extends Component {
       if (this.state.currentCard >= totalQuestions  )
         return (
           <View>
-          <Text>Results</Text>
-          <Text>{this.state.right}/{totalQuestions} correct, {((this.state.right/totalQuestions)*100).toFixed(1)}%</Text>
+          <Text style={styles.title}>Results</Text>
+          <Text style={styles.title}>{this.state.right}/{totalQuestions} correct, {((this.state.right/totalQuestions)*100).toFixed(1)}%</Text>
+          <TouchableOpacity
+              onPress={() => { this.setState({currentCard:0, right: 0, wrong:0,answer:false})}}
+          >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Restart Quiz</Text>
+          </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => {     this.props.navigation.goBack() }}
+          >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Back To Deck</Text>
+          </View>
+          </TouchableOpacity>
+
           </View>
         )
 
@@ -54,14 +74,14 @@ export class Quiz extends Component {
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.right+1})}}
+            onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.right+1,answer:false})}}
         >
         <View style={styles.button}>
           <Text style={styles.buttonText}>Correct</Text>
         </View>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.wrong+1})}}
+        onPress={() => { this.setState({currentCard:this.state.currentCard+1, right: this.state.wrong+1,answer:false})}}
         >
         <View style={styles.button}>
           <Text style={styles.buttonText}>Incorrect</Text>

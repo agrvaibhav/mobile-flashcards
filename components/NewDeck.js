@@ -57,30 +57,7 @@ export class NewDeck extends Component {
       </View>
     )
   }
-  /*
-    rendera() {
 
-    return (
-        <View style={{flex:1}}>
-        <Text>NewDeck</Text>
-        <Text>What is the title of your new deck?</Text>
-        <TextInput
-               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-               onChangeText={(text) => this.setState({text})}
-               value={this.state.text}
-             />
-        <TouchableHighlight
-onPress={() => {
-  this.setModalVisible(true);
-}}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Save</Text>
-        </View>
-        </TouchableHighlight>
-        </View>
-    )
-    }
-*/
 }
 
 

@@ -10,7 +10,7 @@ export class DeckView extends Component {
   static navigationOptions = ({navigation}) => {
     const {entryId}=navigation.state.params
     return {
-      title: entryId
+      title: entryId,
     }
   }
 

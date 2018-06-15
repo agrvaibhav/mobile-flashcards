@@ -38,8 +38,8 @@ let callback = null
 
 export function deckResults (results) {
   console.log("deckResults:"+results)
-  console.log(results)
-  //dataStore = results
+  dataStore = JSON.parse(results)
+  console.log(dataStore)
   callback(dataStore)
 
 }
@@ -74,8 +74,8 @@ saveDeckTitle: take in a single title argument and add it to the decks.
 export function saveDeckTitle(title){
   var newEntry = {title:title,questions:new Array()}
   dataStore[title]=newEntry
-  console.log("saveDeckTitle")
-  console.log(dataStore)
+  //console.log("saveDeckTitle")
+  //console.log(dataStore)
   saveDeck()
   //return AsyncStorage.mergeItem(FLASHCARD_STORAGE_KEY,JSON.stringify(newEntry))
 
@@ -102,22 +102,3 @@ export function addCardToDeck(title,card){
 //  [title]:card,
 //}))
 }
-
-/*
-export function submitEntry({entry, key}) {
-  return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY,JSON.stringify({
-    [key]:entry,
-  }))
-
-}
-
-export function removeEntry(key){
-    return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-      .then((results)=> {
-        const data = JSON.parse(results)
-        data[key] = undefined
-        delete data[key]
-        AsyncStorage.setItem(CALENDAR_STORAGE_KEY,JSON.stringify(data))
-      })
-}
-*/
